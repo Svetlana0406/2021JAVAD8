@@ -47,7 +47,7 @@ class RadioTest {
     @Test
     void shouldGoPrevStationBeforeMinimum() {
         Radio radio = new Radio();
-        radio.setCurrentStation(0);
+        radio.setCurrentStation(-1);
         radio.previousStation();
         assertEquals(9, radio.getCurrentStation());
     }
@@ -61,10 +61,25 @@ class RadioTest {
     }
 
     @Test
+    void shouldGoPreviousStation() {
+        Radio radio = new Radio();
+        radio.setCurrentStation(2);
+        radio.previousStation();
+        assertEquals(1, radio.getCurrentStation());
+    }
+
+    @Test
     void shouldSetVolumeWithinRange() {
         Radio radio = new Radio();
         radio.setCurrentVolume(8);
         assertEquals(8, radio.getCurrentVolume());
+    }
+
+    @Test
+    void shouldSetVolumeWithLessMin() {
+        Radio radio = new Radio();
+        radio.setCurrentVolume(-1);
+        assertEquals(0, radio.getCurrentVolume());
     }
 
     @Test
@@ -104,5 +119,13 @@ class RadioTest {
         radio.setCurrentVolume(100);
         radio.decreaseVolume();
         assertEquals(9, radio.getCurrentVolume());
+    }
+
+    @Test
+    void shouldDecreaseVolumeMin() {
+        Radio radio = new Radio();
+        radio.setCurrentVolume(-1);
+        radio.decreaseVolume();
+        assertEquals(0, radio.getCurrentVolume());
     }
 }
